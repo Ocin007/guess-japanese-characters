@@ -1,0 +1,1 @@
+# guess-japanese-characters
