@@ -48,11 +48,16 @@ function init() {
     const button = document.getElementById('button-help');
     const inputHira: any = document.getElementById('input-hiragana');
     const inputKata: any = document.getElementById('input-katakana');
+    const inputRoman: any = document.getElementById('input-romanji');
     const jpnLabel = document.getElementById('japanese-char');
     AjaxRequest.sendAjaxRequest('../api/get.php', null, function (http) {
         AjaxRequest.errFunction(http, 'get');
     }, (http) => {
         const res = JSON.parse(http.response);
+        console.log(res);
+        if(res.hiragana === null || res.katakana === null) {
+            return;
+        }
         const valueList = getAllValues(res);
         let [actualChar, lastIndex] = next(valueList, inputHira, inputKata, jpnLabel, -1);
         inputHira.addEventListener('keydown', function (ev: any) {
@@ -82,6 +87,14 @@ function init() {
                 return;
             }
             [actualChar, lastIndex] = next(valueList, inputHira, inputKata, jpnLabel, lastIndex);
+        });
+        inputRoman.addEventListener('keydown', function (ev: any) {
+            if(ev.key !== 'Enter') {
+                return;
+            }
+            jpnLabel.innerHTML = res.hiragana[inputRoman.value];
+            jpnLabel.innerHTML += res.katakana[inputRoman.value];
+            inputRoman.value = '';
         });
         button.addEventListener('click', function () {
             const [solution, style] = getSolution(res, actualChar);

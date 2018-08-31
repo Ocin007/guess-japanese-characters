@@ -78,11 +78,16 @@ function init() {
     var button = document.getElementById('button-help');
     var inputHira = document.getElementById('input-hiragana');
     var inputKata = document.getElementById('input-katakana');
+    var inputRoman = document.getElementById('input-romanji');
     var jpnLabel = document.getElementById('japanese-char');
     AjaxRequest.sendAjaxRequest('../api/get.php', null, function (http) {
         AjaxRequest.errFunction(http, 'get');
     }, function (http) {
         var res = JSON.parse(http.response);
+        console.log(res);
+        if (res.hiragana === null || res.katakana === null) {
+            return;
+        }
         var valueList = getAllValues(res);
         var _a = next(valueList, inputHira, inputKata, jpnLabel, -1), actualChar = _a[0], lastIndex = _a[1];
         inputHira.addEventListener('keydown', function (ev) {
@@ -114,6 +119,14 @@ function init() {
             }
             _a = next(valueList, inputHira, inputKata, jpnLabel, lastIndex), actualChar = _a[0], lastIndex = _a[1];
             var _a;
+        });
+        inputRoman.addEventListener('keydown', function (ev) {
+            if (ev.key !== 'Enter') {
+                return;
+            }
+            jpnLabel.innerHTML = res.hiragana[inputRoman.value];
+            jpnLabel.innerHTML += res.katakana[inputRoman.value];
+            inputRoman.value = '';
         });
         button.addEventListener('click', function () {
             var _a = getSolution(res, actualChar), solution = _a[0], style = _a[1];
