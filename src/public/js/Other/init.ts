@@ -7,7 +7,7 @@ function next(
 ): [string, number] {
     let random: number;
     do {
-        random = Math.floor(Math.random() * (valueList.length-1));
+        random = Math.round(Math.random() * (valueList.length-1));
     } while (random === lastIndex);
     jpnLabel.innerHTML = valueList[random];
     inputHira.value = '';

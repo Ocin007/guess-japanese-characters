@@ -40,7 +40,7 @@ var AjaxRequest = /** @class */ (function () {
 function next(valueList, inputHira, inputKata, jpnLabel, lastIndex) {
     var random;
     do {
-        random = Math.floor(Math.random() * (valueList.length - 1));
+        random = Math.round(Math.random() * (valueList.length - 1));
     } while (random === lastIndex);
     jpnLabel.innerHTML = valueList[random];
     inputHira.value = '';
