@@ -88,12 +88,6 @@ function shuffle(a) {
     return a;
 }
 
-function getAllKeys(res: any) {
-    const hira = Object.keys(res.hiragana);
-    const kata = Object.keys(res.katakana);
-    return hira.concat(kata);
-}
-
 function init() {
     const button = document.getElementById('button-help');
     const romanji = document.getElementById('button-random');
@@ -159,7 +153,7 @@ function init() {
         });
         romanji.addEventListener('click', function () {
             jpnLabel.innerHTML = '';
-            const keys = shuffle(getAllKeys(res));
+            const keys = shuffle(Object.keys(res.hiragana));
             for (let i = 0; i < keys.length; i++) {
                 jpnLabel.innerHTML += keys[i]+' ';
             }

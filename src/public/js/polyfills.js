@@ -116,11 +116,6 @@ function shuffle(a) {
     return a;
     var _a;
 }
-function getAllKeys(res) {
-    var hira = Object.keys(res.hiragana);
-    var kata = Object.keys(res.katakana);
-    return hira.concat(kata);
-}
 function init() {
     var button = document.getElementById('button-help');
     var romanji = document.getElementById('button-random');
@@ -189,7 +184,7 @@ function init() {
         });
         romanji.addEventListener('click', function () {
             jpnLabel.innerHTML = '';
-            var keys = shuffle(getAllKeys(res));
+            var keys = shuffle(Object.keys(res.hiragana));
             for (var i = 0; i < keys.length; i++) {
                 jpnLabel.innerHTML += keys[i] + ' ';
             }
