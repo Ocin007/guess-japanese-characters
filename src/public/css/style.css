@@ -70,3 +70,6 @@ body {
 .button-blue:active {
     background-color: #2d6da5;
 }
+#button-help {
+    margin-bottom: 10px;
+}

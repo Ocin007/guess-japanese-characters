@@ -108,8 +108,22 @@ function getSolution(res, actualList) {
     }
     return [keyList, 'katakana'];
 }
+function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        _a = [a[j], a[i]], a[i] = _a[0], a[j] = _a[1];
+    }
+    return a;
+    var _a;
+}
+function getAllKeys(res) {
+    var hira = Object.keys(res.hiragana);
+    var kata = Object.keys(res.katakana);
+    return hira.concat(kata);
+}
 function init() {
     var button = document.getElementById('button-help');
+    var romanji = document.getElementById('button-random');
     var inputHira = document.getElementById('input-hiragana');
     var inputKata = document.getElementById('input-katakana');
     var inputRoman = document.getElementById('input-romanji');
@@ -171,6 +185,13 @@ function init() {
             else {
                 inputHira.value = solutionToString(solution);
                 inputHira.focus();
+            }
+        });
+        romanji.addEventListener('click', function () {
+            jpnLabel.innerHTML = '';
+            var keys = shuffle(getAllKeys(res));
+            for (var i = 0; i < keys.length; i++) {
+                jpnLabel.innerHTML += keys[i] + ' ';
             }
         });
     });

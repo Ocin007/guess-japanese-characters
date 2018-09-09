@@ -80,8 +80,23 @@ function getSolution(res: any, actualList: string[]): [string[], string] {
     return [keyList, 'katakana'];
 }
 
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function getAllKeys(res: any) {
+    const hira = Object.keys(res.hiragana);
+    const kata = Object.keys(res.katakana);
+    return hira.concat(kata);
+}
+
 function init() {
     const button = document.getElementById('button-help');
+    const romanji = document.getElementById('button-random');
     const inputHira: any = document.getElementById('input-hiragana');
     const inputKata: any = document.getElementById('input-katakana');
     const inputRoman: any = document.getElementById('input-romanji');
@@ -140,6 +155,13 @@ function init() {
             } else {
                 inputHira.value = solutionToString(solution);
                 inputHira.focus();
+            }
+        });
+        romanji.addEventListener('click', function () {
+            jpnLabel.innerHTML = '';
+            const keys = shuffle(getAllKeys(res));
+            for (let i = 0; i < keys.length; i++) {
+                jpnLabel.innerHTML += keys[i]+' ';
             }
         });
     });
